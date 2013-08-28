@@ -754,21 +754,26 @@ unsigned long RGBBlinky(CMDSTRUCT *pCmdStruct)
 {
     if((pCmdStruct->cmd_1 == 0x40)&&(pCmdStruct->cmd_2 == 0x05))
     {
-        RGB_Init();
+        // RGB_Init();
         switch(pCmdStruct->cmd_3)
         {
             case 0x01:  // R
-                RGBColorSet(R_PWM, (255-pCmdStruct->rx_buf[0])*100/255);
+                RGBColorSet(R_PWM, (pCmdStruct->rx_buf[0] * 100) / 255);
                 pCmdStruct->ret = TRUE;
                 pCmdStruct->tx_len = 0;
                 break;
             case 0x02:  // G
-                RGBColorSet(G_PWM, (255-pCmdStruct->rx_buf[0])*100/255);
+                RGBColorSet(G_PWM, (pCmdStruct->rx_buf[0] * 100) / 255);
                 pCmdStruct->ret = TRUE;
                 pCmdStruct->tx_len = 0;
                 break;
             case 0x03:  // B
-                RGBColorSet(B_PWM, (255-pCmdStruct->rx_buf[0])*100/255);
+                RGBColorSet(B_PWM, (pCmdStruct->rx_buf[0] * 100) / 255);
+                pCmdStruct->ret = TRUE;
+                pCmdStruct->tx_len = 0;
+                break;
+            case 0x04:
+            	RGB_Init();
                 pCmdStruct->ret = TRUE;
                 pCmdStruct->tx_len = 0;
                 break;
