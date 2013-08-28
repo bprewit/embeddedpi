@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+# vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 """
 ZetCode PyQt4 tutorial 
@@ -57,7 +58,9 @@ class Example(QtGui.QWidget):
         self.col = QtGui.QColor(0, 0, 0)  
         self.uart = CommandInterface()
         self.uart.open(conf['port'], conf['baud'])
-		
+
+        self.InitEPI()
+
         RedLabel=QtGui.QLabel("Red",self)
         RedLabel.setGeometry(60, 20, 30, 10)
         
@@ -148,6 +151,14 @@ class Example(QtGui.QWidget):
         self.square.setStyleSheet("QFrame { background-color: %s }" %
             self.col.name())  
         
+    def InitEPI(self):
+        self.uart.write(165)
+        self.uart.write(64)
+        self.uart.write(5)
+        self.uart.write(4)
+        self.uart.write(0)
+        self.uart.write(90)  
+			
 def main():
     
     app = QtGui.QApplication(sys.argv)
@@ -158,3 +169,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
